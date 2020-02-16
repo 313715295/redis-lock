@@ -2,6 +2,7 @@ package com.zwq.lock.redislock.aspect;
 
 import com.zwq.lock.redislock.support.LockMethodEnum;
 import com.zwq.lock.redislock.support.RedisLock;
+import com.zwq.lock.redislock.support.RepeatRequestException;
 import com.zwq.lock.redislock.util.AspectExpressUtil;
 import com.zwq.lock.redislock.registry.RedisLockRegistry;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,9 @@ public class RedisLockAspect {
         if (lockMethodEnum == LockMethodEnum.TRY_LOCK) {
             return tryLock(joinPoint, redisLockRegistry.obtain(key));
         }
+        if (lockMethodEnum == LockMethodEnum.TRY_LOCK_ELSE_THROWS) {
+            return tryLockElseThrows(joinPoint, redisLockRegistry.obtain(key));
+        }
         throw new RuntimeException("加锁方式错误");
     }
 
@@ -72,5 +76,17 @@ public class RedisLockAspect {
         log.info("业务类=[{}] 方法=[{}] 正在加锁处理中，lock=[{}]],忽略重复请求", joinPoint.getTarget().getClass().getName(),
                 joinPoint.getSignature().getName(),lock);
         return null;
+    }
+    private Object tryLockElseThrows(ProceedingJoinPoint joinPoint, Lock lock) throws Throwable{
+        if (lock.tryLock()) {
+            try {
+                return joinPoint.proceed();
+            }finally {
+                lock.unlock();
+            }
+        }
+        log.info("业务类=[{}] 方法=[{}] 正在加锁处理中，lock=[{}]],忽略重复请求", joinPoint.getTarget().getClass().getName(),
+                joinPoint.getSignature().getName(),lock);
+        throw new RepeatRequestException("请求处理中,请稍后");
     }
 }

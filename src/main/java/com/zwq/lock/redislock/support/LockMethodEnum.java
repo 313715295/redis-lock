@@ -8,5 +8,5 @@ package com.zwq.lock.redislock.support;
  */
 public enum LockMethodEnum {
 
-    LOCK,TRY_LOCK;
+    LOCK,TRY_LOCK,TRY_LOCK_ELSE_THROWS;
 }
