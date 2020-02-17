@@ -137,6 +137,10 @@ public final class RedisLockRegistry {
             if (!this.localLock.tryLock(time, unit)) {
                 return false;
             }
+            //本地锁重入，redis锁自动续期
+            if (localLock.getHoldCount() > 1) {
+                return true;
+            }
             try {
                 long expire = now + TimeUnit.MILLISECONDS.convert(time, unit);
                 boolean acquired;
