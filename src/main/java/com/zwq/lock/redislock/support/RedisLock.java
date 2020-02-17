@@ -15,6 +15,7 @@ public @interface RedisLock {
     /**
      * 加锁key,使用spel表达式 例:method(#a0)
      * method为传入的构建锁的类的静态方法
+     * 第一个参数的值为a0,以此类推。
      */
     String lockKey() default "";
 

@@ -1,7 +1,7 @@
 package com.zwq.lock.redislock.support;
 
 import com.zwq.lock.redislock.registry.RedisLockRegistry;
-import com.zwq.lock.redislock.util.LockUtils;
+import com.zwq.lock.redislock.utils.LockUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

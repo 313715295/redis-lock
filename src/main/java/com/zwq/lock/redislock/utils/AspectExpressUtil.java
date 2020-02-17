@@ -1,4 +1,4 @@
-package com.zwq.lock.redislock.util;
+package com.zwq.lock.redislock.utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.expression.*;

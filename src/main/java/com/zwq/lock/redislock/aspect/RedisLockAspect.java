@@ -3,7 +3,7 @@ package com.zwq.lock.redislock.aspect;
 import com.zwq.lock.redislock.support.LockMethodEnum;
 import com.zwq.lock.redislock.support.RedisLock;
 import com.zwq.lock.redislock.support.RepeatRequestException;
-import com.zwq.lock.redislock.util.AspectExpressUtil;
+import com.zwq.lock.redislock.utils.AspectExpressUtil;
 import com.zwq.lock.redislock.registry.RedisLockRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
